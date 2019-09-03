@@ -14,7 +14,8 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
+        $patients = Patient::paginate();
+        return view('admin.patient.index')->withPatients($patients);
     }
 
     /**
@@ -24,7 +25,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.patient.create');
     }
 
     /**
@@ -35,7 +36,20 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'family' => 'required|max:255',
+            'gender' => 'required|boolean',
+            'phone_number' => 'digits:11',
+            'national_code' => 'digits:10',
+            'weight' => 'integer|between:10,300',
+            'height' => 'integer|between:55,250',
+            'is_smoker' => 'boolean',
+            'birth_year' => 'integer|between:1290,1398'
+        ]);
+        Patient::create($validatedData);
+        return redirect('/patient')->withErrors($validatedData);
     }
 
     /**
@@ -46,7 +60,7 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
+        return view('admin.patient.show', ['patient' => $patient]);
     }
 
     /**
@@ -57,7 +71,7 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        //
+        return view('admin.patient.edit', ['patient' => $patient]);
     }
 
     /**
@@ -69,7 +83,19 @@ class PatientController extends Controller
      */
     public function update(Request $request, Patient $patient)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'family' => 'required|max:255',
+            'gender' => 'required|boolean',
+            'phone_number' => 'digits:11',
+            'national_code' => 'digits:10|unique:patients,national_code,' . $patient->id,
+            'weight' => 'integer|between:10,300',
+            'height' => 'integer|between:55,250',
+            'is_smoker' => 'boolean',
+            'birth_year' => 'integer|between:1290,1398'
+        ]);
+        $patient->update($validatedData);
+        return redirect('/patient')->withErrors($validatedData);
     }
 
     /**
@@ -80,6 +106,7 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        //
+        $patient->delete();
+        return redirect('/patient');
     }
 }

@@ -12,5 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+Route::name('dashboard') -> get('/dashboard',function() {
+    return view('admin.dashboard');
+});
+
+Route::name('about_developers')->get('about_developers',function() {
+    return view('common.about_developers');
+});
+
+Route::name('about_system')->get('about_system',function() {
+    return view('common.about_system');
+});
+
+Route::resource('patient', 'PatientController');

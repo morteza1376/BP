@@ -1,0 +1,43 @@
+input[type="text"] {
+    /* width: 50%; */
+    
+}
+
+form {
+    /* text-align: center; */
+}
+
+.form-group input[type="text"]{
+    display: inline-block;
+    width: 60%;
+}
+
+.form-group .label-30{
+    display: inline-block;
+    width: 30%;
+}
+
+.form-group {
+    float: right;
+    margin: 5px 20px;
+    width: 100%;
+}
+
+.submit-group {
+    text-align: center;
+    clear: both;
+}
+
+.error {
+    padding: 5px;
+    text-align: center;
+    color: white;
+}
+
+.btn-do {
+    padding: 5px 10px !important;
+}
+
+.table {
+    text-align: center;
+}

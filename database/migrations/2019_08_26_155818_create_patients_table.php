@@ -20,10 +20,12 @@ class CreatePatientsTable extends Migration
             $table->string('phone_number')->unique();
             $table->string('national_code')->unique();
             $table->float('weight')->nullable();
-            $table->tinyInteger('height')->nullable();
-            $table->integer('birth_date')->nullable();
+            $table->integer('height')->nullable();
+            $table->integer('birth_year')->nullable();
             $table->boolean('gender');
             $table->boolean('is_smoker')->nullable();
+            $table->float('smoke_time')->nullable();
+            $table->tinyInteger('health_status')->nullable();
             $table->timestamps();
         });
     }
