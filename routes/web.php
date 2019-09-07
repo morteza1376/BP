@@ -27,3 +27,4 @@ Route::name('about_system')->get('about_system',function() {
 });
 
 Route::resource('patient', 'PatientController');
+Route::resource('bp', 'BPRecordController');

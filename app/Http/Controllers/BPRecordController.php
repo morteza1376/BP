@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\BPRecord;
+use App\Patient;
 use Illuminate\Http\Request;
+use Morilog\Jalali\Jalalian;
 
 class BPRecordController extends Controller
 {
@@ -14,7 +16,8 @@ class BPRecordController extends Controller
      */
     public function index()
     {
-        //
+        $bps = BPRecord::paginate(5);
+        return view('admin.bp.index', ['bps' => $bps]);
     }
 
     /**
@@ -24,7 +27,12 @@ class BPRecordController extends Controller
      */
     public function create()
     {
-        //
+        $patients = Patient::all();
+        $now_date = Jalalian::now()->format('%Y/%m/%d');
+        return view('admin.bp.create', [
+            'patients' => $patients,
+            'now_date' => $now_date
+        ]);
     }
 
     /**
@@ -35,7 +43,18 @@ class BPRecordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $timestamp = Jalalian::fromFormat('Y/m/d', $request->register_date)->getTimestamp();
+
+        $request->merge(['register_date' => $timestamp]);
+        // dd($request->all());
+        $validatedData = $request->validate([
+            'patient_id' => 'required|exists:patients,id',
+            'systolic' => 'required|numeric|between:0,300',
+            'diastolic' => 'required|numeric|between:0,300',
+            'register_date' => 'required|numeric',
+        ]);
+        BPRecord::create($validatedData);
+        return redirect('/bp');
     }
 
     /**

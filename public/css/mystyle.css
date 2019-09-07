@@ -12,6 +12,17 @@ form {
     width: 60%;
 }
 
+.form-group input[type="number"]{
+    display: inline-block;
+    width: 60%;
+    margin-left: 5px;
+}
+
+.form-group select{
+    display: inline-block;
+    width: 60%;
+}
+
 .form-group .label-30{
     display: inline-block;
     width: 30%;

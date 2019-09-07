@@ -16,8 +16,8 @@ class CreateBPRecordsTable extends Migration
         Schema::create('b_p_records', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('patient_id');
-            $table->tinyInteger('systolic');
-            $table->tinyInteger('diastolic');
+            $table->integer('systolic');
+            $table->integer('diastolic');
             $table->integer('register_date');
             $table->timestamps();
         });

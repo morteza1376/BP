@@ -14,7 +14,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-4">
+            <div class="col-md-4">
                 <div class="card" style="width: ;">
                     {{-- <img class="card-img-top" src="..." alt="Card image cap"> --}}
                     <div class="card-body">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-md-8 mt-0 mt-md-0 mt-3">
                 <div class="card" style="width: ;">
                     {{-- <img class="card-img-top" src="..." alt="Card image cap"> --}}
                     <div class="card-body">

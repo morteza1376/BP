@@ -18,7 +18,13 @@ class SidebarOptions {
                 'activeString' => 'patient*'
 
             ],
+            'bp_records' => [
+                'name' => 'bp_records',
+                'icon' => 'briefcase-medical',
+                'route' => 'bp.index',
+                'activeString' => 'bp*'
 
+            ],
         ];
     }
 

@@ -16,6 +16,12 @@
   <link href="{{ asset('css/style.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/mystyle.css') }}" rel="stylesheet">
   <link href="{{ asset('css/index-style.css') }}" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
+  <!-- JQuery -->
+  {{-- <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script> --}}
 
   <style>
     .map-container{
@@ -99,8 +105,7 @@
   {{-- @include('template.footer'); --}}
 
   <!-- SCRIPTS -->
-  <!-- JQuery -->
-  <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+  
   <!-- Bootstrap tooltips -->
   <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
   <!-- Bootstrap core JavaScript -->

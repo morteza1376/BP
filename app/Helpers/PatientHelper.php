@@ -57,3 +57,67 @@ function explainGender($gender, $lang = 'en') {
 function calculateHealthStatus() {
     return 0;
 }
+
+function explainBP($bp, $systolicOrDiastolic) {
+    $messages = [
+        'خطا',
+        'فشارخون بیش از حد پایین است',
+        'فشارخون نرمال است',
+        'مرز فشار خون بالا',
+        'ابتلا به فشارخون بالا (متوسط)',
+        'فشارخون بسیار بالاست',
+        'فشارخون بحرانی'
+    ];
+
+    $colors = [
+        'grey',
+        'lightblue',
+        'lightgreen',
+        'yellow',
+        'orange',
+        'red',
+        'purple'
+    ];
+
+    if($systolicOrDiastolic === 's') {
+        if ($bp <= 90) {
+            $index = 1;
+        } elseif($bp > 90 && $bp <= 120) {
+            $index = 2;
+        } elseif($bp > 120 && $bp < 140) {
+            $index = 3;
+        } elseif($bp >= 140 && $bp < 160) {
+            $index = 4;
+        } elseif($bp >= 160 && $bp < 180) {
+            $index = 5;
+        } elseif($bp >= 180) {
+            $index = 6;
+        } else {
+            $index = 0;
+        }
+    } elseif($systolicOrDiastolic === 'd') {
+        if ($bp <= 60) {
+            $index = 1;
+        } elseif($bp > 60 && $bp <= 80) {
+            $index = 2;
+        } elseif($bp > 80 && $bp < 90) {
+            $index = 3;
+        } elseif($bp >= 90 && $bp < 100) {
+            $index = 4;
+        } elseif($bp >= 100 && $bp < 120) {
+            $index = 5;
+        } elseif($bp >= 120) {
+            $index = 6;
+        } else {
+            $index = 0;
+        }
+    } else {
+
+    }
+
+    return [
+        'index' => $index,
+        'color' => $colors[$index],
+        'message' => $messages[$index]
+    ];
+}

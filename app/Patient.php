@@ -28,4 +28,9 @@ class Patient extends Model
         return explainGender($gender, $lang);
 
     }
+
+    public function getShowRoute()
+    {
+        return route('patient.show',$this->id);
+    }
 }
