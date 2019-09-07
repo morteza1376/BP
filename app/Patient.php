@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Morilog\Jalali\Jalalian;
 
 class Patient extends Model
 {
@@ -33,4 +34,12 @@ class Patient extends Model
     {
         return route('patient.show',$this->id);
     }
+
+    public function getAge()
+    {
+        $year = Jalalian::now()->format('Y');
+        return $year - $this->birth_year;
+
+    }
+    
 }

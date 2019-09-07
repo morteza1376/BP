@@ -79,7 +79,7 @@ function explainBP($bp, $systolicOrDiastolic) {
         'purple'
     ];
 
-    if($systolicOrDiastolic === 's') {
+    if($systolicOrDiastolic === 's') { //systolic
         if ($bp <= 90) {
             $index = 1;
         } elseif($bp > 90 && $bp <= 120) {
@@ -95,7 +95,7 @@ function explainBP($bp, $systolicOrDiastolic) {
         } else {
             $index = 0;
         }
-    } elseif($systolicOrDiastolic === 'd') {
+    } elseif($systolicOrDiastolic === 'd') { //diastolic
         if ($bp <= 60) {
             $index = 1;
         } elseif($bp > 60 && $bp <= 80) {
@@ -115,9 +115,48 @@ function explainBP($bp, $systolicOrDiastolic) {
 
     }
 
-    return [
+    $returnArray = [
         'index' => $index,
         'color' => $colors[$index],
         'message' => $messages[$index]
     ];
+
+    return $returnArray;
+}
+
+function getBloodPressureReport($bp,$mode) {
+    if($mode == 'd' || $mode == 's') {
+        $index = explainBP($bp,$mode)['index'];
+        switch ($index) {
+            case 0:
+                $report = 'خطا در گزارشدهی';
+                break;
+            case 1:
+                $report = 'بیمار فشارخون %val% پایینی دارد و ممکن است دچار سرگیجه و در موارد شدید تشنج شود';
+                break;
+            case 2:
+                $report = 'فشارخون %val% بیمار در محدوده نرمال قرار دارد';
+                break;
+            case 3:
+                $report = 'بیمار در مرز فشارخون (%val%) بالا قرار دارد، به بیمار ورزش و مصرف کم نمک در رژیم غذایی توصیه می شود و فشار بیمار همچنان چک شود';
+                break;
+            case 4:
+                $report = 'فشار خون %val% بیمار بالاست، به بیمار مصرف دارو به طور منظم و ورزش و رعایت مصرف نمک توصیه می شود';
+                break;
+            case 5:
+                $report = 'فشارخون %val% بیمار بسیار بالاست، حتما اقدامات لازم برای کاهش فشارخون انجام گیرد';
+                break;
+            case 6:
+                $report = 'فشارخون %val% بیمار در محدوده بحرانی قرار دارد، حتما فشار بیمار باید کنترل شود و در صورت نیاز بستری گردد، خطر سکته وجود دارد';
+                break;
+        }
+
+        if($mode == 's') {
+            $report = str_replace('%val%','سیستولیک',$report);
+        } elseif($mode == 'd') {
+            $report = str_replace('%val%','دیاستولیک',$report);
+        }
+
+        return $report;
+    }
 }

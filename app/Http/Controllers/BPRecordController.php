@@ -65,7 +65,7 @@ class BPRecordController extends Controller
      */
     public function show(BPRecord $bPRecord)
     {
-        //
+        return view('admin.bp.show', ['bp' => $bPRecord]);
     }
 
     /**

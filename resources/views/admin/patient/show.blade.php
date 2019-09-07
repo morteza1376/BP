@@ -40,7 +40,7 @@
                         <hr>
                         <p class="card-text">سن: <strong>{{ $patient->birth_year }}</strong></p>
                         <p class="card-text">قد: <strong>{{ $patient->height }}</strong></p>
-                        <p class="card-text">وزن: <strong>{{ $patient->weight }}</strong></p>
+                        <p class="card-text"><i class="fas fa-weight mr-2"></i> وزن: <strong>{{ $patient->weight }}</strong></p>
                         <p class="card-text">شاخص توده بدنی: <span class="badge" style="font-size:1.2em;background-color:{{ explainBMI($patient->getBMI())['color'] }}">{{ $patient->getBMI() }}</span></p>
                         <a href="#" class="btn btn-primary">ویرایش</a>
                         <a href="{{ route('patient.destroy',$patient->id)}}" onclick="return askIfDelete()" class="btn btn-danger">حذف</a>

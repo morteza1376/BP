@@ -27,4 +27,6 @@ Route::name('about_system')->get('about_system',function() {
 });
 
 Route::resource('patient', 'PatientController');
-Route::resource('bp', 'BPRecordController');
+Route::resource('bp', 'BPRecordController', ['parameters' => [
+    'bp' => 'b_p_record'
+]]);
