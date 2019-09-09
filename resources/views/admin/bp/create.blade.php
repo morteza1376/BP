@@ -25,7 +25,7 @@
                     <select class="js-patients" required name="patient_id" id="patient">
                         <option value="0">---- انتخاب خدمت گیرنده -----</option>    
                             @foreach ($patients as $patient)
-                                <option value="{{ $patient->id }}">{{ $patient->name . ' ' . $patient->family }}</option>    
+                                <option {{ (old('patient_id') == $patient->id) ? 'selected' : '' }} value="{{ $patient->id }}">{{ $patient->name . ' ' . $patient->family }}</option>    
                             @endforeach
                     </select>
                 </div>
@@ -45,7 +45,7 @@
 
                 <div class="form-group">
                     <label class="label-30" for="register_date">تاریخ ثبت : </label>
-                    <input type="text" class="form-control" required name="register_date" id="register_date" value="{{ old('register_date') ?? $now_date }}">
+                    <input type="text" class="form-control" required name="register_date" id="register_date" value="{{ getJalalianDate(old('register_date')) ?? $now_date }}">
                 </div>
             </div>
            

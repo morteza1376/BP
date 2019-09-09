@@ -66,7 +66,7 @@
 
   <script>
     function askIfDelete() {
-      res = confirm('آیا از حذف این خدمت گیرنده اطمینان دارید؟');
+      res = confirm('آیا از حذف این رکورد اطمینان دارید؟');
       if(res) {
         return true;
       } else {

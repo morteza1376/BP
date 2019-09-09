@@ -1,8 +1,8 @@
 @extends('layout')
-@section('section',__('patient.index'))
-@section('sub_section','/'.__('patient.edit'))
+@section('section',__('bp.index'))
+@section('sub_section','/'.__('bp.create'))
 
-@include('admin.patient.cardnav')
+@include('admin.bp.cardnav')
 
 @section('error_message')
     @if(count($errors) > 0)
@@ -16,73 +16,40 @@
 @endsection
 
 @section('content')
-<form action="{{route('patient.update', $patient->id)}}" method="POST">
+<form action="{{route('bp.update', $bp->id)}}" method="POST">
+    @method('PATCH')
     <div class="container">
         <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="label-30" for="patient">انتخاب خدمت گیرنده : </label>
+                    <select class="js-patients" required name="patient_id" id="patient">
+                        <option value="0">---- انتخاب خدمت گیرنده -----</option>    
+                            @foreach ($patients as $patient)
+                                <option {{ ($bp->id == $patient->id) ? 'selected' : '' }} value="{{ $patient->id }}">{{ $patient->name . ' ' . $patient->family }}</option>    
+                            @endforeach
+                    </select>
+                </div>
+            
+                <div class="form-group">
+                    <label class="label-30" for="systolic">فشار سیستولیک (بالا) : </label>
+                    <input type="number" class="form-control" style="width:80px;" required name="systolic" id="systolic" value="{{ $bp->systolic }}">
+                    <small>واحد فشار میلی متر جیوه می باشد (برای مثال ۱۲٫۵ برابر است با ۱۲۵ میلی متر جیوه)</small>
+                </div>
+            
+                <div class="form-group">
+                    <label class="label-30" for="diastolic">فشار دیاستولیک (پایین) : </label>
+                    <input type="number" class="form-control" style="width:80px;" required name="diastolic" id="diastolic" value="{{ $bp->diastolic }}">
+                    <small>واحد فشار میلی متر جیوه می باشد (برای مثال ۸ برابر است با ۸۰ میلی متر جیوه)</small>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="label-30" for="name">نام : </label>
-                    <input type="text" class="form-control" value="{{ $patient->name }}" required name="name" id="name" placeholder="نام" value="{{ old('name') }}">
                 </div>
-            
+
                 <div class="form-group">
-                    <label class="label-30" for="family">نام خانوادگی : </label>
-                    <input type="text" class="form-control" value="{{ $patient->family }}" required name="family" id="family" placeholder="نام خانوادگی" value="{{ old('family') }}">
-                </div>
-            
-                <div class="form-group">
-                    <label class="label-30" for="birth_year">سال تولد : </label>
-                    <input type="text" class="form-control" value="{{ $patient->birth_year }}" required name="birth_year" id="birth_year" placeholder="تاریخ تولد" value="{{ old('birth_year') }}">
-                </div>
-            
-                <div class="form-group">
-                    <label class="label-30" for="national_code">کد ملی : </label>
-                    <input type="text" class="form-control" value="{{ $patient->national_code }}" required name="national_code" id="national_code" placeholder="کد ملی" value="{{ old('national_code') }}">
-                </div>
-                <div class="form-group">
-                    <label class="label-30" for="gender">جنسیت : </label>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input required @php echo ($patient->gender == "0") ? 'checked' : '' @endphp type="radio" id="male" value="0" name="gender" class="custom-control-input">
-                        <label class="custom-control-label" for="male">مرد</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input required @php echo ($patient->gender == "1") ? 'checked' : '' @endphp type="radio" id="female" value="1" name="gender" class="custom-control-input">
-                        <label class="custom-control-label" for="female">زن</label>
-                    </div>
+                    <label class="label-30" for="register_date">تاریخ ثبت : </label>
+                    <input type="text" class="form-control" required name="register_date" id="register_date" value="{{ $bp->getJalalianDate() }}">
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="label-30" for="phone_number">شماره همراه : </label>
-                    <input type="text" class="form-control" value="{{ $patient->phone_number }}" required name="phone_number" id="phone_number" placeholder="شماره تماس" value="{{ old('phone_number') }}">
-                </div>
-            
-                <div class="form-group">
-                    <label class="label-30" for="weight">وزن : </label>
-                    <input type="text" class="form-control" value="{{ $patient->weight }}" name="weight" id="weight" placeholder="وزن" value="{{ old('weight') }}">
-                </div>
-            
-                <div class="form-group">
-                    <label class="label-30" for="height">قد : </label>
-                    <input type="text" class="form-control" value="{{ $patient->height }}" name="height" id="height" placeholder="قد" value="{{ old('height') }}">
-                </div>
-                <div class="form-group" >
-                    <label class="label-30" for="smoking-status">وضعیت سیگار : </label>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input @php echo ($patient->is_smoker == "1") ? 'checked' : '' @endphp type="radio" id="smoking" value="1" name="is_smoker" onclick="return showSmokeField('smoker')" class="custom-control-input">
-                        <label class="custom-control-label" for="smoking">سیگاری</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input @php echo ($patient->is_smoker == "0") ? 'checked' : '' @endphp type="radio" id="no-smoking" value="0" name="is_smoker" onclick="return showSmokeField('no-smoker')" class="custom-control-input">
-                        <label class="custom-control-label" for="no-smoking">عدم مصرف سیگار</label>
-                    </div>
-                </div>
-                <div class="form-group" id="smoking_time" style="display:{{($patient->is_smoker == 1) ? 'block' : 'none'}}">
-                    <label class="label-30" for="smoke_time">مدت زمان مصرف : </label>
-                    <input type="text" class="form-control" value="{{ $patient->smoke_time }}" name="smoke_time" id="smoke_time" placeholder="مدت زمان مصرف به سال">
-                </div>
-            </div>
+           
         </div>
 
     </div>
@@ -90,13 +57,16 @@
 
     
     @csrf
-    @method('PATCH')
     <div class="submit-group">
         <input type="submit" value="ثبت" class="btn btn-success">
     </div>
 </form>
 
 <script>
+    // In your Javascript (external .js resource or <script> tag)
+    $(document).ready(function() {
+        $('.js-patients').select2();
+    });
     function showSmokeField(checkb) {
         if(checkb == 'smoker') {
             document.getElementById('smoking_time').style.display = 'block';
@@ -110,7 +80,6 @@
             document.getElementById('smoking_time').children[1].removeAttribute('required');
 
         }
-
     }
 </script>
 

@@ -1,5 +1,6 @@
 <?php
 
+use Morilog\Jalali\Jalalian;
 
 function calculateBMI($height, $weight, $precision = 1) {
     $h_meter = $height/100;
@@ -159,4 +160,9 @@ function getBloodPressureReport($bp,$mode) {
 
         return $report;
     }
+}
+
+function getJalalianDate($timestamp)
+{
+    return Jalalian::forge($timestamp)->format('%Y/%m/%d');
 }

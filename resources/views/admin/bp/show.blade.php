@@ -65,7 +65,6 @@
                             {{ getBloodPressureReport($bp->diastolic, 'd') }}.
                         </strong>
                     </p>
-
                 </div>
             </div>
         </div>

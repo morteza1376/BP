@@ -76,7 +76,11 @@ class BPRecordController extends Controller
      */
     public function edit(BPRecord $bPRecord)
     {
-        //
+        $patients = Patient::all();
+        return view('admin.bp.edit', [
+            'bp' => $bPRecord,
+            'patients' => $patients
+        ]);
     }
 
     /**
@@ -88,7 +92,18 @@ class BPRecordController extends Controller
      */
     public function update(Request $request, BPRecord $bPRecord)
     {
-        //
+        $timestamp = Jalalian::fromFormat('Y/m/d', $request->register_date)->getTimestamp();
+
+        $request->merge(['register_date' => $timestamp]);
+        // dd($request->all());
+        $validatedData = $request->validate([
+            'patient_id' => 'required|exists:patients,id',
+            'systolic' => 'required|numeric|between:0,300',
+            'diastolic' => 'required|numeric|between:0,300',
+            'register_date' => 'required|numeric',
+        ]);
+        $bPRecord->update($validatedData);
+        return redirect('/bp');
     }
 
     /**
@@ -99,6 +114,7 @@ class BPRecordController extends Controller
      */
     public function destroy(BPRecord $bPRecord)
     {
-        //
+        $bPRecord->delete();
+        return redirect('/bp');
     }
 }
