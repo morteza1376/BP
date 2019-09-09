@@ -16,7 +16,7 @@ class BPRecordController extends Controller
      */
     public function index()
     {
-        $bps = BPRecord::paginate(5);
+        $bps = BPRecord::orderBy('register_date', 'desc')->paginate(5);
         return view('admin.bp.index', ['bps' => $bps]);
     }
 

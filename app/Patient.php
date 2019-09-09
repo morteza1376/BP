@@ -19,6 +19,11 @@ class Patient extends Model
         'birth_year',
     ];
 
+    public function BPS()
+    {
+        return $this->hasMany('App\BPRecord');
+    }
+
     public function getBMI() {
         return calculateBMI($this->height, $this->weight);
     }

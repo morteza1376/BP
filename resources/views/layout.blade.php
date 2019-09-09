@@ -22,6 +22,7 @@
 
   <!-- JQuery -->
   {{-- <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script> --}}
+  @yield('head')
 
   <style>
     .map-container{

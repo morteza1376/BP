@@ -60,7 +60,28 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        return view('admin.patient.show', ['patient' => $patient]);
+        $bps = $patient->BPS()->orderBy('register_date', 'asc');
+        $skip = 0;
+        if($bps->count()>12) {
+            $skip = $bps->count() -12;
+        }
+        $all_bps = $bps->skip($skip)->take(12)->get();
+        $systolics = [];
+        $diastolics = [];
+        $dates = [];
+        
+        foreach ($all_bps as $bp) {
+            $systolics[] = $bp->systolic;
+            $diastolics[] = $bp->diastolic;
+            $dates[] = getJalalianDate($bp->register_date);
+        }
+
+        return view('admin.patient.show', [
+            'patient' => $patient,
+            'systolics' => $systolics,
+            'diastolics' => $diastolics,
+            'dates' => $dates,
+        ]);
     }
 
     /**
